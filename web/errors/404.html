@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 — Страница не найдена</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; display: flex; align-items: center; justify-content: center; min-height: 100vh; background: linear-gradient(135deg, #0f172a, #1e293b); color: #fff; text-align: center; padding: 2rem; }
+        .error-box { background: rgba(255,255,255,0.05); padding: 3rem; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); }
+        h1 { font-size: 6rem; color: #3b82f6; margin-bottom: 1rem; animation: float 3s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        p { color: #94a3b8; font-size: 1.2rem; margin-bottom: 2rem; }
+        a { display: inline-block; padding: 1rem 2rem; background: #3b82f6; color: #fff; border-radius: 50px; font-weight: 600; transition: transform 0.2s; }
+        a:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(59,130,246,0.4); }
+    </style>
+</head>
+<body>
+<div class="error-box">
+    <h1>404</h1>
+    <p>Упс! Страница не найдена</p>
+    <p style="font-size: 1rem;">Возможно, она была перемещена или удалена</p>
+    <a href="/">← Вернуться на главную</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,7 @@
+.idea/
+out/
+*.class
+*.iml
+.DS_Store
+web/logs/*.log
+!web/logs/.gitkeep

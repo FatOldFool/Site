@@ -1,0 +1,42 @@
+<section>
+    <h2>Обо мне</h2>
+    <p class="subtitle">Мой опыт и стек технологий</p>
+    <div style="display: grid; grid-template-columns: 220px 1fr; gap: 3rem; align-items: center;">
+        <div style="width: 220px; height: 220px; border-radius: 16px; overflow: hidden; flex-shrink: 0;">
+            <img src="/images/photo.jpg" alt="Артем Тарасов" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div>
+            <h3 style="margin-bottom: 1rem; color: #0f172a;">Разработчик с опытом</h3>
+            <p style="color: #64748b; margin-bottom: 1rem;">Привет! Меня зовут Артем Тарасов. Я создаю веб-приложения, утилиты и десктопный софт. Люблю чистый код, оптимизацию и удобные интерфейсы.</p>
+            <p style="color: #64748b; margin-bottom: 1.5rem;">В свободное время делюсь знаниями в блоге и развиваю open-source проекты.</p>
+            <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                <span style="padding: 0.4rem 1rem; background: #eff6ff; color: #3b82f6; border-radius: 20px; font-size: 0.9rem;">Java</span>
+                <span style="padding: 0.4rem 1rem; background: #eff6ff; color: #3b82f6; border-radius: 20px; font-size: 0.9rem;">HTML/CSS</span>
+                <span style="padding: 0.4rem 1rem; background: #eff6ff; color: #3b82f6; border-radius: 20px; font-size: 0.9rem;">SQL</span>
+                <span style="padding: 0.4rem 1rem; background: #eff6ff; color: #3b82f6; border-radius: 20px; font-size: 0.9rem;">Git</span>
+                <span style="padding: 0.4rem 1rem; background: #eff6ff; color: #3b82f6; border-radius: 20px; font-size: 0.9rem;">Docker</span>
+                <span style="padding: 0.4rem 1rem; background: #eff6ff; color: #3b82f6; border-radius: 20px; font-size: 0.9rem;">Linux</span>
+            </div>
+        </div>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-top: 3rem;">
+        <div class="card" style="text-align: center; padding: 1.5rem;">
+            <h3 style="font-size: 1.8rem; color: #3b82f6;">5+</h3>
+            <p style="color: #64748b;">Лет опыта</p>
+        </div>
+        <div class="card" style="text-align: center; padding: 1.5rem;">
+            <h3 style="font-size: 1.8rem; color: #3b82f6;">12</h3>
+            <p style="color: #64748b;">Приложений</p>
+        </div>
+        <div class="card" style="text-align: center; padding: 1.5rem;">
+            <h3 style="font-size: 1.8rem; color: #3b82f6;">50+</h3>
+            <p style="color: #64748b;">Статей</p>
+        </div>
+        <div class="card" style="text-align: center; padding: 1.5rem;">
+            <h3 style="font-size: 1.8rem; color: #3b82f6;">10K+</h3>
+            <p style="color: #64748b;">Загрузок</p>
+        </div>
+    </div>
+</section>
+
+<style>@media (max-width: 768px) { section > div { grid-template-columns: 1fr !important; justify-items: center; text-align: center; } section > div > div:last-child { width: 100%; } }</style>

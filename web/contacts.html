@@ -1,0 +1,33 @@
+<section>
+  <h2>Контакты</h2>
+  <p class="subtitle">Напишите мне для сотрудничества</p>
+  <div style="background: #0f172a; color: #fff; border-radius: 16px; padding: 2.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;">
+    <div>
+      <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.8rem; background: rgba(255,255,255,0.05); border-radius: 8px;">
+        <span>📧</span>
+        <span>artem@example.com</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.8rem; background: rgba(255,255,255,0.05); border-radius: 8px;">
+        <span>📱</span>
+        <span>+7 (999) 123-45-67</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.8rem; background: rgba(255,255,255,0.05); border-radius: 8px;">
+        <span>💬</span>
+        <span>Telegram: @artem_dev</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 1rem; padding: 0.8rem; background: rgba(255,255,255,0.05); border-radius: 8px;">
+        <span>📍</span>
+        <span>Москва, Россия</span>
+      </div>
+    </div>
+    <form style="display: flex; flex-direction: column; gap: 1rem;" action="/contact" method="POST">
+      <input type="text" name="name" placeholder="Ваше имя" required style="width: 100%; padding: 0.9rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #fff; border-radius: 8px; font-family: inherit; outline: none;">
+      <input type="email" name="email" placeholder="Ваш email" required style="width: 100%; padding: 0.9rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #fff; border-radius: 8px; font-family: inherit; outline: none;">
+      <input type="text" name="subject" placeholder="Тема" style="width: 100%; padding: 0.9rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #fff; border-radius: 8px; font-family: inherit; outline: none;">
+      <textarea name="message" rows="4" placeholder="Сообщение..." required style="width: 100%; padding: 0.9rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #fff; border-radius: 8px; font-family: inherit; outline: none; resize: vertical;"></textarea>
+      <button type="submit" class="btn btn-primary" style="width: 100%;">Отправить сообщение</button>
+    </form>
+  </div>
+</section>
+
+<style>@media (max-width: 768px) { div[style*="grid-template-columns"] { grid-template-columns: 1fr !important; } }</style>

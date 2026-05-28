@@ -1,0 +1,58 @@
+<section>
+    <h2>Галерея проектов</h2>
+    <p class="subtitle">Скриншоты моих работ</p>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
+        <div style="position: relative; overflow: hidden; border-radius: 12px; aspect-ratio: 16/10; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); cursor: pointer; group: gallery;">
+            <div style="position: absolute; inset: 0; background: rgba(0,0,0,0.7); opacity: 0; transition: opacity 0.3s; display: flex; align-items: center; justify-content: center; flex-direction: column; color: #fff;">
+                <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem;">TaskFlow Pro</h3>
+                <p>Менеджер задач</p>
+            </div>
+            <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 4rem;">📊</div>
+        </div>
+
+        <div style="position: relative; overflow: hidden; border-radius: 12px; aspect-ratio: 16/10; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); cursor: pointer;">
+            <div style="position: absolute; inset: 0; background: rgba(0,0,0,0.7); opacity: 0; transition: opacity 0.3s; display: flex; align-items: center; justify-content: center; flex-direction: column; color: #fff;">
+                <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem;">NoteSync</h3>
+                <p>Облачный блокнот</p>
+            </div>
+            <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 4rem;">📝</div>
+        </div>
+
+        <div style="position: relative; overflow: hidden; border-radius: 12px; aspect-ratio: 16/10; background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); cursor: pointer;">
+            <div style="position: absolute; inset: 0; background: rgba(0,0,0,0.7); opacity: 0; transition: opacity 0.3s; display: flex; align-items: center; justify-content: center; flex-direction: column; color: #fff;">
+                <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem;">ImageConverter</h3>
+                <p>Конвертер изображений</p>
+            </div>
+            <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 4rem;">🖼️</div>
+        </div>
+
+        <div style="position: relative; overflow: hidden; border-radius: 12px; aspect-ratio: 16/10; background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); cursor: pointer;">
+            <div style="position: absolute; inset: 0; background: rgba(0,0,0,0.7); opacity: 0; transition: opacity 0.3s; display: flex; align-items: center; justify-content: center; flex-direction: column; color: #fff;">
+                <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem;">FocusTimer</h3>
+                <p>Таймер продуктивности</p>
+            </div>
+            <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 4rem;">⏱️</div>
+        </div>
+
+        <div style="position: relative; overflow: hidden; border-radius: 12px; aspect-ratio: 16/10; background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); cursor: pointer;">
+            <div style="position: absolute; inset: 0; background: rgba(0,0,0,0.7); opacity: 0; transition: opacity 0.3s; display: flex; align-items: center; justify-content: center; flex-direction: column; color: #fff;">
+                <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem;">Web Server</h3>
+                <p>Java HTTP сервер</p>
+            </div>
+            <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 4rem;">☕</div>
+        </div>
+
+        <div style="position: relative; overflow: hidden; border-radius: 12px; aspect-ratio: 16/10; background: linear-gradient(135deg, #30cfd0 0%, #330867 100%); cursor: pointer;">
+            <div style="position: absolute; inset: 0; background: rgba(0,0,0,0.7); opacity: 0; transition: opacity 0.3s; display: flex; align-items: center; justify-content: center; flex-direction: column; color: #fff;">
+                <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem;">Blog Platform</h3>
+                <p>Платформа для блога</p>
+            </div>
+            <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 4rem;">✍️</div>
+        </div>
+    </div>
+</section>
+
+<style>
+    div[style*="position: relative"]:hover > div:first-child { opacity: 1 !important; }
+</style>
