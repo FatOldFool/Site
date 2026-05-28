@@ -26,16 +26,23 @@ public class SiteServer {
         public void handle(HttpExchange ex) throws IOException {
             String path = ex.getRequestURI().getPath();
             String method = ex.getRequestMethod();
-            log(ex, method, path);
+            logRequest(ex, method, path);
 
             try {
+                // 1. Форма контактов
                 if (path.equals("/contact") && "POST".equals(method)) {
                     handleContact(ex);
-                } else if (path.equals("/download")) {
-                    handleDownload(ex);
-                } else if (path.startsWith("/files/") || path.startsWith("/images/") || path.startsWith("/css/")) {
+                }
+                // 2. СТАТИЧЕСКИЕ ФАЙЛЫ (резюме, картинки, стили)
+                else if (path.startsWith("/files/") || path.startsWith("/images/") || path.startsWith("/css/")) {
                     serveStatic(ex);
-                } else {
+                }
+                // 3. Страница загрузки приложений
+                else if (path.startsWith("/download")) {
+                    handleDownload(ex);
+                }
+                // 4. Основные страницы сайта
+                else {
                     String page = resolvePage(path);
                     if (page != null) serveTemplate(ex, page);
                     else serveError(ex, 404);
@@ -58,11 +65,29 @@ public class SiteServer {
             return null;
         }
 
+        private void serveStatic(HttpExchange ex) throws IOException {
+            String urlPath = ex.getRequestURI().getPath();
+            if (isUnsafe(urlPath)) { serveError(ex, 403); return; }
+
+            String filePath = WEB_DIR + urlPath;
+            File f = new File(filePath);
+            if (!f.exists() || f.isDirectory()) {
+                System.err.println("⚠️ Файл не найден: " + filePath);
+                serveError(ex, 404);
+                return;
+            }
+
+            byte[] data = Files.readAllBytes(f.toPath());
+            System.out.println("📤 Отдача файла: " + urlPath + " (" + data.length + " bytes)");
+            send(ex, 200, getContentType(filePath), data);
+        }
+
         private void serveTemplate(HttpExchange ex, String page) throws IOException {
             if (isUnsafe(page)) { serveError(ex, 403); return; }
-            String header = read(WEB_DIR + "parts/header.html");
-            String footer = read(WEB_DIR + "parts/footer.html");
-            String content = read(WEB_DIR + page);
+
+            String header = readFile(WEB_DIR + "parts/header.html");
+            String footer = readFile(WEB_DIR + "parts/footer.html");
+            String content = readFile(WEB_DIR + page);
 
             String active = page.replace(".html", "");
             if (active.equals("index")) active = "/"; else active = "/" + active;
@@ -70,18 +95,6 @@ public class SiteServer {
 
             byte[] out = (header + content + footer).getBytes("UTF-8");
             send(ex, 200, "text/html; charset=UTF-8", out);
-        }
-
-        private void serveStatic(HttpExchange ex) throws IOException {
-            String urlPath = ex.getRequestURI().getPath();
-            if (isUnsafe(urlPath)) { serveError(ex, 403); return; }
-
-            String filePath = WEB_DIR + urlPath;
-            File f = new File(filePath);
-            if (!f.exists() || f.isDirectory()) { serveError(ex, 404); return; }
-
-            byte[] data = Files.readAllBytes(f.toPath());
-            send(ex, 200, getContentType(filePath), data);
         }
 
         private void handleContact(HttpExchange ex) throws IOException {
@@ -99,7 +112,7 @@ public class SiteServer {
             String html = "<!DOCTYPE html><html><head><meta charset='UTF-8'><title>Спасибо</title>" +
                     "<style>body{font-family:sans-serif;display:flex;justify-content:center;align-items:center;height:100vh;background:#0f172a;color:#fff;text-align:center}" +
                     ".b{background:rgba(255,255,255,0.05);padding:2rem;border-radius:12px}a{color:#3b82f6;margin-top:1rem;display:inline-block}</style></head><body>" +
-                    "<div class='b'><h1>✅</h1><h2>Спасибо, " + esc(name) + "!</h2><p>Сообщение сохранено. Я отвечу в ближайшее время.</p>" +
+                    "<div class='b'><h1>✅</h1><h2>Спасибо, " + escapeHtml(name) + "!</h2><p>Сообщение сохранено. Я отвечу в ближайшее время.</p>" +
                     "<a href='/'>← На главную</a></div></body></html>";
             send(ex, 200, "text/html; charset=UTF-8", html.getBytes("UTF-8"));
         }
@@ -110,7 +123,7 @@ public class SiteServer {
             String html = "<!DOCTYPE html><html><head><meta charset='UTF-8'><title>Загрузка</title>" +
                     "<style>body{font-family:sans-serif;display:flex;justify-content:center;align-items:center;height:100vh;background:#0f172a;color:#fff;text-align:center}" +
                     ".b{background:rgba(255,255,255,0.05);padding:2rem;border-radius:12px}a{color:#3b82f6;margin-top:1rem;display:inline-block}</style></head><body>" +
-                    "<div class='b'><h2>⬇️ " + esc(app) + "</h2><p>Загрузка началась...</p><a href='/apps'>← К приложениям</a></div></body></html>";
+                    "<div class='b'><h2>️ " + escapeHtml(app) + "</h2><p>Загрузка началась...</p><a href='/apps'>← К приложениям</a></div></body></html>";
             send(ex, 200, "text/html; charset=UTF-8", html.getBytes("UTF-8"));
         }
 
@@ -124,9 +137,9 @@ public class SiteServer {
 
         private boolean isUnsafe(String p) { return p.contains("..") || p.contains("\\"); }
 
-        private String read(String path) {
+        private String readFile(String path) {
             try { return new String(Files.readAllBytes(Paths.get(path)), "UTF-8"); }
-            catch (IOException e) { return ""; }
+            catch (IOException e) { return "<!-- Файл не найден: " + path + " -->"; }
         }
 
         private Map<String, String> parseForm(String body) {
@@ -140,7 +153,7 @@ public class SiteServer {
             return m;
         }
 
-        private String esc(String s) {
+        private String escapeHtml(String s) {
             return s == null ? "" : s.replace("&","&amp;").replace("<","&lt;").replace(">","&gt;").replace("\"","&quot;");
         }
 
@@ -161,6 +174,7 @@ public class SiteServer {
 
         private void send(HttpExchange ex, int code, String type, byte[] data) throws IOException {
             ex.getResponseHeaders().set("Content-Type", type);
+            ex.getResponseHeaders().set("Access-Control-Allow-Origin", "*");
             ex.sendResponseHeaders(code, data.length);
             ex.getResponseBody().write(data);
             ex.close();
@@ -169,15 +183,18 @@ public class SiteServer {
         private void serveError(HttpExchange ex, int code) throws IOException {
             if (code == 404) {
                 try {
-                    String errHtml = read(WEB_DIR + "errors/404.html");
-                    if (!errHtml.isEmpty()) { send(ex, 404, "text/html; charset=UTF-8", errHtml.getBytes("UTF-8")); return; }
+                    String errHtml = readFile(WEB_DIR + "errors/404.html");
+                    if (!errHtml.contains("Файл не найден")) {
+                        send(ex, 404, "text/html; charset=UTF-8", errHtml.getBytes("UTF-8"));
+                        return;
+                    }
                 } catch (Exception ignored) {}
             }
             String html = "<h1 style='text-align:center;margin-top:20%;font-family:sans-serif;color:#333'>" + code + " Error</h1>";
             send(ex, code, "text/html; charset=UTF-8", html.getBytes("UTF-8"));
         }
 
-        private void log(HttpExchange ex, String method, String path) {
+        private void logRequest(HttpExchange ex, String method, String path) {
             try {
                 String line = String.format("[%s] %s %s %s\n", LocalDateTime.now().format(FMT), ex.getRemoteAddress().getAddress().getHostAddress(), method, path);
                 Files.write(Paths.get(ACCESS_LOG), line.getBytes("UTF-8"), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
